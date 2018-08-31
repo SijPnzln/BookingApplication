@@ -2,55 +2,62 @@ package com.example.demo.service;
 
 import java.util.List;
 
-import org.springframework.context.annotation.Configuration;
-
 import com.example.demo.models.TravelPackage;
 import com.example.demo.repository.TravelPackageRepository;
-import com.example.demo.repository.TravelServiceRepository;
 
-@Configuration
 public class TravelPackageService {
 	private TravelPackageRepository travelPackageRepository;
-	private TravelServiceRepository travelServiceRepository;
+	private TravelServiceService travelServiceService;
 	
 	public TravelPackageService(TravelPackageRepository travelPackageRepository) {
 		super();
 		this.travelPackageRepository = travelPackageRepository;
 	}
-
+	
+	//======== TRAVEL PACKAGE =========
+	//GET/FIND
 	public TravelPackage getTravelPackageById(int packageId) {
 		return travelPackageRepository.findById(packageId).get();
 	}
-
+	//PUT/UPDATE
 	public TravelPackage updateTravelPackage(int packageId, TravelPackage travelPackage) {
 		if(travelPackageRepository.existsById(packageId)) {
 			travelPackageRepository.save(travelPackage);
 		}
  		return travelPackage;
 	}
-
+	//DELETE
 	public void deleteTravelPackage(TravelPackage travelPackageById) {
 		travelPackageRepository.delete(travelPackageById);
 	}
 
+	
+	//====== TRAVEL PACKAGES (GROUP) =====
+	//Delete
 	public void deleteTravelPackages(TravelPackage travelPackageById) {
-		// TODO Auto-generated method stub
-		
+		travelPackageRepository.delete(travelPackageById);
 	}
-
-	public List<TravelPackage> saveTravelPackages(List<TravelPackage> travelPackage) {
-		// TODO Auto-generated method stub
-		return null;
+	//Post
+	public List<TravelPackage> saveTravelPackages(List<TravelPackage> travelPackageList) {
+		for(TravelPackage travelPackageItem: travelPackageList) {
+			travelServiceService.saveAllServices(travelPackageItem.getAvailableServiceList());
+			travelPackageRepository.save(travelPackageItem);
+		}
+		return travelPackageList;
 	}
-
+	//Update
 	public List<TravelPackage> updateTravelPackages(List<TravelPackage> travelPackageList) {
-		// TODO Auto-generated method stub
-		return null;
+		for(TravelPackage travelPackageItem: travelPackageList) {
+			if(travelPackageRepository.existsById(travelPackageItem.getTravelPackageId())) {
+				travelServiceService.saveAllServices(travelPackageItem.getAvailableServiceList());
+				travelPackageRepository.save(travelPackageItem);
+			}
+		}
+		return travelPackageList;
 	}
-
+	//Find/Get
 	public List<TravelPackage> getAllTravelPackages() {
-		// TODO Auto-generated method stub
-		return null;
+		return (List<TravelPackage>) travelPackageRepository.findAll();
 	}
 	
 	

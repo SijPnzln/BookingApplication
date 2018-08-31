@@ -1,9 +1,15 @@
 package com.example.demo.models;
 
+import javax.persistence.JoinColumn;
+
 public class Image {
 	private int imageId;
 	private String description;
 	private String imageUrl;
+	@JoinColumn(name="travelService_id")
+	private TravelService travelService;
+	
+	
 	public int getImageId() {
 		return imageId;
 	}

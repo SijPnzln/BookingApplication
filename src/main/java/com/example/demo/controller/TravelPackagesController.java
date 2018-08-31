@@ -35,8 +35,8 @@ private TravelPackageService travelPackageService;
 	}
 	
 	@PostMapping
-	public List<TravelPackage> saveTravelPackages (@RequestBody List<TravelPackage> travelPackage) {
-		return travelPackageService.saveTravelPackages(travelPackage);
+	public List<TravelPackage> saveTravelPackages (@RequestBody List<TravelPackage> travelPackageList) {
+		return travelPackageService.saveTravelPackages(travelPackageList);
 	}
 	
 	@DeleteMapping

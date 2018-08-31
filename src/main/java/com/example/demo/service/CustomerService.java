@@ -29,7 +29,7 @@ public class CustomerService {
 	public void deleteCustomer(Customer customer) {
 		customerRepository.delete(customer);
 	}
-
+	
 	public Customer updateCustomer(int customerId, Customer customer) {
 		if(customerRepository.existsById(customerId)) {
 			customerRepository.save(customer);

@@ -5,8 +5,10 @@ import org.springframework.context.annotation.Configuration;
 
 import com.example.demo.repository.CustomerRepository;
 import com.example.demo.repository.TravelPackageRepository;
+import com.example.demo.repository.TravelServiceRepository;
 import com.example.demo.service.CustomerService;
 import com.example.demo.service.TravelPackageService;
+import com.example.demo.service.TravelServiceService;
 
 @Configuration
 public class BookerConfig {
@@ -18,5 +20,9 @@ public class BookerConfig {
 	@Bean
 	public TravelPackageService travelPackageService(TravelPackageRepository travelPackageRepository) {
 		return new TravelPackageService(travelPackageRepository);
+	}
+	@Bean
+	public TravelServiceService travelServiceService(TravelServiceRepository travelServiceRepository) {
+		return new TravelServiceService(travelServiceRepository);
 	}
 }

@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -19,8 +20,10 @@ public class TravelService {
 	private int serviceId;
 	private String serviceName;
 	private String description;
-	@OneToMany
+	@OneToMany(mappedBy="travelService")
 	private List<Image> images;
+	@JoinColumn(name="travelPackage_id")
+	private TravelPackage travelPackage;
 	
 	public int getServiceId() {
 		return serviceId;
