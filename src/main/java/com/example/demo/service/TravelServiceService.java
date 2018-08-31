@@ -1,12 +1,16 @@
 package com.example.demo.service;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.transaction.Transactional;
 
 import com.example.demo.models.TravelService;
 import com.example.demo.repository.TravelServiceRepository;
-
+@Transactional
 public class TravelServiceService {
 	TravelServiceRepository travelServiceRepository;
+	ImageService imageService;
 	
 	public TravelServiceService(TravelServiceRepository travelServiceRepository) {
 		super();
@@ -15,18 +19,18 @@ public class TravelServiceService {
 	
 	//======= TRAVEL SERVICE =======
 	//GET/FIND
-	public TravelService getTravelPackageById(int packageId) {
+	public TravelService getTravelServiceById(int packageId) {
 		return travelServiceRepository.findById(packageId).get();
 	}
 	//PUT/UPDATE
-	public TravelService updateTravelPackage(int serviceId, TravelService travelServiceById) {
+	public TravelService updateTravelServiceById(int serviceId, TravelService travelServiceById) {
 		if(travelServiceRepository.existsById(serviceId)) {
 			travelServiceRepository.save(travelServiceById);
 		}
  		return travelServiceById;
 	}
 	//DELETE
-	public void deleteTravelService(TravelService travelServiceById) {
+	public void deleteTravelServiceById(TravelService travelServiceById) {
 		travelServiceRepository.delete(travelServiceById);
 	}
 	
@@ -46,7 +50,15 @@ public class TravelServiceService {
 		return (List<TravelService>) travelServiceRepository.findAll();
 	}
 	//PUT/UPDATE
-	
-	
-	
+	public List<TravelService> updateAllTravelService(List<TravelService> travelServiceList) {
+		List<TravelService> tempTravelService = new ArrayList<TravelService>();
+		for(TravelService travelServiceItem: travelServiceList) {
+			if(travelServiceRepository.existsById(travelServiceItem.getServiceId())) {
+//				travelServiceItem.setImages(imageService.updateImages(travelServiceItem.getImages()));
+//				travelServiceRepository.save(travelServiceItem);
+				tempTravelService.add(updateTravelServiceById(travelServiceItem.getServiceId(), travelServiceItem));
+			}
+		}
+		return travelServiceList;
+	}
 }

@@ -40,7 +40,7 @@ private TravelPackageService travelPackageService;
 	}
 	
 	@DeleteMapping
-	public void deleteTravelPackages(@RequestParam("customerId") int[] travelPackageIds) {
+	public void deleteTravelPackages(@RequestParam("travelPackageId") int[] travelPackageIds) {
 		for(int i=0; i<travelPackageIds.length; i++) {
 			travelPackageService.deleteTravelPackages(travelPackageService.getTravelPackageById(travelPackageIds[i]));
 		}

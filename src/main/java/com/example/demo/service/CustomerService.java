@@ -2,12 +2,13 @@ package com.example.demo.service;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import com.example.demo.models.Customer;
 import com.example.demo.repository.CustomerRepository;
-
+@Transactional
 public class CustomerService {
 	private CustomerRepository customerRepository;
-	private List<Customer> updatedCustomerList;
 	
 	public CustomerService(CustomerRepository customerRepository) {
 		super();
@@ -42,9 +43,8 @@ public class CustomerService {
 			if(customerRepository.existsById(customer.getCustomerId())) {
 				customerRepository.save(customer);
 			}
-			updatedCustomerList.add(customer);//tanggalin pag di gumana
 		}
- 		return updatedCustomerList;
+ 		return customerList;
 	}
 
 	public Customer saveCustomer(Customer customer) {

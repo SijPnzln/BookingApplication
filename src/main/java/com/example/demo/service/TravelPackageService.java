@@ -1,10 +1,13 @@
 package com.example.demo.service;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.transaction.Transactional;
 
 import com.example.demo.models.TravelPackage;
 import com.example.demo.repository.TravelPackageRepository;
-
+@Transactional
 public class TravelPackageService {
 	private TravelPackageRepository travelPackageRepository;
 	private TravelServiceService travelServiceService;
@@ -20,14 +23,14 @@ public class TravelPackageService {
 		return travelPackageRepository.findById(packageId).get();
 	}
 	//PUT/UPDATE
-	public TravelPackage updateTravelPackage(int packageId, TravelPackage travelPackage) {
+	public TravelPackage updateTravelPackageById(int packageId, TravelPackage travelPackage) {
 		if(travelPackageRepository.existsById(packageId)) {
 			travelPackageRepository.save(travelPackage);
 		}
  		return travelPackage;
 	}
 	//DELETE
-	public void deleteTravelPackage(TravelPackage travelPackageById) {
+	public void deleteTravelPackageById(TravelPackage travelPackageById) {
 		travelPackageRepository.delete(travelPackageById);
 	}
 
@@ -39,21 +42,19 @@ public class TravelPackageService {
 	}
 	//Post
 	public List<TravelPackage> saveTravelPackages(List<TravelPackage> travelPackageList) {
-		for(TravelPackage travelPackageItem: travelPackageList) {
-			travelServiceService.saveAllServices(travelPackageItem.getAvailableServiceList());
-			travelPackageRepository.save(travelPackageItem);
-		}
-		return travelPackageList;
+		return (List<TravelPackage>) travelPackageRepository.saveAll(travelPackageList);
 	}
 	//Update
 	public List<TravelPackage> updateTravelPackages(List<TravelPackage> travelPackageList) {
+		List<TravelPackage> tempTravelPackage = new ArrayList<TravelPackage>();
 		for(TravelPackage travelPackageItem: travelPackageList) {
 			if(travelPackageRepository.existsById(travelPackageItem.getTravelPackageId())) {
-				travelServiceService.saveAllServices(travelPackageItem.getAvailableServiceList());
-				travelPackageRepository.save(travelPackageItem);
+//				travelPackageItem.setAvailableServiceList(travelServiceService.updateAllTravelService(travelPackageItem.getAvailableServiceList()));
+//				travelPackageRepository.save(travelPackageItem);
+				tempTravelPackage.add(updateTravelPackageById(travelPackageItem.getTravelPackageId(), travelPackageItem));
 			}
 		}
-		return travelPackageList;
+		return tempTravelPackage;
 	}
 	//Find/Get
 	public List<TravelPackage> getAllTravelPackages() {

@@ -28,12 +28,12 @@ public class TravelPackageController {
 	
 	@PutMapping("/{travelPackageId}")
 	public TravelPackage updateCustomer(@PathVariable ("travelPackageId") int travelPackageId, @RequestBody TravelPackage travelPackage) {
-		return travelPackageService.updateTravelPackage(travelPackageId, travelPackage);
+		return travelPackageService.updateTravelPackageById(travelPackageId, travelPackage);
 	}
 	
 	@DeleteMapping("/{travelPackageId}")
 	public void deleteCustomer(@PathVariable ("travelPackageId") int travelPackageId) {
-		travelPackageService.deleteTravelPackage(travelPackageService.getTravelPackageById(travelPackageId));
+		travelPackageService.deleteTravelPackageById(travelPackageService.getTravelPackageById(travelPackageId));
 	}
 	
 }
