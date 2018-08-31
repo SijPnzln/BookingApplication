@@ -1,0 +1,22 @@
+package com.example.demo.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import com.example.demo.repository.CustomerRepository;
+import com.example.demo.repository.TravelPackageRepository;
+import com.example.demo.service.CustomerService;
+import com.example.demo.service.TravelPackageService;
+
+@Configuration
+public class BookerConfig {
+	
+	@Bean
+	public CustomerService customerService(CustomerRepository customerRepository) {
+		return new CustomerService(customerRepository);
+	}
+	@Bean
+	public TravelPackageService travelPackageService(TravelPackageRepository travelPackageRepository) {
+		return new TravelPackageService(travelPackageRepository);
+	}
+}
